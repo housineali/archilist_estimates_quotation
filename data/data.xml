@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="seq_real_state_request" model="ir.sequence">
+            <field name="name">Real State Request</field>
+            <field name="code">real.state.request</field>
+            <field name="prefix">RSR</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="seq_real_state_quotation" model="ir.sequence">
+            <field name="name">Real State Quotation</field>
+            <field name="code">real.state.quotation</field>
+            <field name="prefix">RFQ</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+
+        <record id="email_notification_client_submit_request" model="mail.template">
+            <field name="name">Client Submit New Request</field>
+            <field name="model_id" ref="model_real_state_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${user.email|safe}</field>
+            <field name="email_to"></field>
+            <field name="subject">New Request Submitted</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear Sir,<br/></p>
+            % set access_action = object.with_context(force_website=True).get_access_action()
+            % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+            % set access_url = object.get_mail_url()
+            <p>I hope my Email finds you well.</p>
+            <p>Please note that a new request with number ${object.name} was submitted by ${object.user_id.name}.</p>
+            <br/><br/>
+            <center>
+              <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Request</a>
+            </center>
+
+            <p>Thank you,</p>
+            <p style="color:#888888">
+            % if user and user.signature:
+                ${user.signature | safe}
+            % endif
+            </p>
+            ]]>
+            </field>
+        </record>
+        <record id="email_notification_admin_review_request" model="mail.template">
+            <field name="name">User Review Request</field>
+            <field name="model_id" ref="model_real_state_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${user.email|safe}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="subject">Request Reviewed</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear Sir,<br/></p>
+            % set access_action = object.with_context(force_website=True).get_access_action()
+            % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+            % set access_url = object.get_mail_url()
+            <p>I hope my Email finds you well.</p>
+            <p>Please note that your request with number ${object.name} was reviewed by ${user.name}.</p>
+            <br/><br/>
+            <center>
+              <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Request</a>
+            </center>
+
+            <p>Thank you,</p>
+            <p style="color:#888888">
+            % if user and user.signature:
+                ${user.signature | safe}
+            % endif
+            </p>
+            ]]>
+            </field>
+        </record>
+        <record id="email_notification_admin_reject_request" model="mail.template">
+            <field name="name">User Reject Request</field>
+            <field name="model_id" ref="model_real_state_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${user.email|safe}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="subject">Request Rejected</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear Sir,<br/></p>
+            % set access_action = object.with_context(force_website=True).get_access_action()
+            % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+            % set access_url = object.get_mail_url()
+            <p>I hope my Email finds you well.</p>
+            <p>Please note that your request with number ${object.name} was rejected by ${user.name}.</p>
+            <br/><br/>
+            <center>
+              <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Request</a>
+            </center>
+
+            <p>Thank you,</p>
+            <p style="color:#888888">
+            % if user and user.signature:
+                ${user.signature | safe}
+            % endif
+            </p>
+            ]]>
+            </field>
+        </record>
+        <record id="email_notification_admin_accept_estimation" model="mail.template">
+            <field name="name">Client Accept Estimation</field>
+            <field name="model_id" ref="model_real_state_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${user.email|safe}</field>
+            <field name="email_to"></field>
+            <field name="subject">Client Accept Estimation</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear Sir,<br/></p>
+            % set access_action = object.with_context(force_website=True).get_access_action()
+            % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+            % set access_url = object.get_mail_url()
+            <p>I hope my Email finds you well.</p>
+            <p>Please note that request with number ${object.name} Estimation accepted by ${user.name}.</p>
+            <br/><br/>
+            <center>
+              <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Request</a>
+            </center>
+
+            <p>Thank you,</p>
+            <p style="color:#888888">
+            % if user and user.signature:
+                ${user.signature | safe}
+            % endif
+            </p>
+            ]]>
+            </field>
+        </record>
+        <record id="email_notification_admin_reject_estimation" model="mail.template">
+            <field name="name">Client Reject Estimation</field>
+            <field name="model_id" ref="model_real_state_request"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="email_from">${user.email|safe}</field>
+            <field name="email_to"></field>
+            <field name="subject">Client Reject Estimation</field>
+            <field name="body_html"><![CDATA[
+            <p>Dear Sir,<br/></p>
+            % set access_action = object.with_context(force_website=True).get_access_action()
+            % set is_online = access_action and access_action['type'] == 'ir.actions.act_url'
+            % set access_url = object.get_mail_url()
+            <p>I hope my Email finds you well.</p>
+            <p>Please note that request with number ${object.name} Estimation rejected by ${user.name}.</p>
+            <br/><br/>
+            <center>
+              <a href="${access_url}" style="background-color: #1abc9c; padding: 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 16px;" class="o_default_snippet_text">View Request</a>
+            </center>
+
+            <p>Thank you,</p>
+            <p style="color:#888888">
+            % if user and user.signature:
+                ${user.signature | safe}
+            % endif
+            </p>
+            ]]>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
+

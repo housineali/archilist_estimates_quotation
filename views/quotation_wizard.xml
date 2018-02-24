@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="real_state_quotation_wizard_view_form" model="ir.ui.view">
+            <field name="name">real.state.quotation.wizard.form</field>
+            <field name="model">real.state.quotation.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div>
+                        <label for="partner_ids"/>
+                        <field name="partner_ids" required="True" widget="many2many_tags" domain="[('supplier','=',True)]"/>
+                        <footer>
+                            <button string="Create Quotations" name="create_quotations" type="object" class="btn-primary"/>
+                            <button string="Cancel" class="btn-default" special="cancel"/>
+                        </footer>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="real_state_quotation_wizard_view_action" model="ir.actions.act_window">
+            <field name="name">Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">real.state.quotation.wizard</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">new</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('real_state_quotation_wizard_view_form')})]"/>
+        </record>
+
+
+    </data>
+</odoo>

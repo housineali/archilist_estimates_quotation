@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_real_state_request_client,real.state.request Client,model_real_state_request,archilist_estimates_quotation.real_state_client,1,1,1,0
+access_real_state_request_vendor,real.state.request Vendor,model_real_state_request,archilist_estimates_quotation.real_state_vendor,1,0,0,0
+access_real_state_request_user,real.state.request User,model_real_state_request,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_property_type,property.type,model_property_type,,1,0,0,0
+access_property_type_user,property.type User,model_property_type,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_finishing_type,finishing.type,model_finishing_type,,1,0,0,0
+access_finishing_type_user,finishing.type User,model_finishing_type,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_real_state_quotation_accepted_public,real.state.quotation.accepted Public,model_real_state_quotation_accepted,,1,0,0,0
+access_real_state_quotation_accepted_user,real.state.quotation.accepted User,model_real_state_quotation_accepted,archilist_estimates_quotation.real_state_user,1,0,0,0
+
+access_real_state_quotation_client,real.state.quotation Client,model_real_state_quotation,archilist_estimates_quotation.real_state_client,1,1,1,0
+access_real_state_quotation_vendor,real.state.quotation Vendor,model_real_state_quotation,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_real_state_quotation_user,real.state.quotation User,model_real_state_quotation,archilist_estimates_quotation.real_state_user,1,1,1,1

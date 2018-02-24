@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+        <template id="assets_backend" name="kanban_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/archilist_estimates_quotation/static/src/less/kanban.less"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

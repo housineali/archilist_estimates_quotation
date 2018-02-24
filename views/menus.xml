@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="real_state_request_action_client" model="ir.actions.act_window">
+            <field name="name">Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">real.state.request</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('real_state_request_kanban')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('real_state_request_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('real_state_request_form_client')})]"/>
+
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new request
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <record id="real_state_request_action_user" model="ir.actions.act_window">
+            <field name="name">Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">real.state.request</field>
+            <field name="domain">[('state','!=','draft')]</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('real_state_request_kanban')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('real_state_request_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('real_state_request_form_user')})]"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new request
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <record id="real_state_quotation_action_vendor" model="ir.actions.act_window">
+            <field name="name">RFQ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">real.state.quotation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_real_state_quotation_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_real_state_quotation_form_vendor')})]"/>
+
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new Quotation
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <record id="property_type_action" model="ir.actions.act_window">
+            <field name="name">Property Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new property type
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <record id="finishing_type_action" model="ir.actions.act_window">
+            <field name="name">Finishing Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">finishing.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new finishing type
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+
+        <record id="new_action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="name">Vendors</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('supplier','=',True)]</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_supplier': 1,'default_customer': 0,'default_supplier': 1,
+                'default_company_type': 'company'}
+            </field>
+            <field name="filter" eval="True"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a contact in your address book.
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to
+                    a supplier: discussions, history of purchases,
+                    documents, etc.
+                </p>
+            </field>
+        </record>
+
+        <!--Parent Menu Items-->
+        <menuitem id="real_state_menu_root" name="Estimates &amp; Quotations" sequence="0"
+                  groups="archilist_estimates_quotation.real_state_client,archilist_estimates_quotation.real_state_vendor,archilist_estimates_quotation.real_state_user"/>
+        <menuitem id="real_state_menu_categ" name="Estimates &amp; Quotations" parent="real_state_menu_root"
+                  sequence="1"/>
+        <menuitem id="real_state_settings_menu_categ" name="Settings" parent="real_state_menu_root" sequence="2"
+                  groups="archilist_estimates_quotation.real_state_user"/>
+
+        <!--Client Menu Items-->
+        <menuitem id="real_state_request_menu_client_action" name="Request &amp; Estimates"
+                  parent="real_state_menu_categ"
+                  action="real_state_request_action_client" groups="archilist_estimates_quotation.real_state_client" sequence="1"/>
+        <!--User Menu Items-->
+        <menuitem id="real_state_request_menu_user_action" name="Estimates" parent="real_state_menu_categ"
+                  action="real_state_request_action_user" groups="archilist_estimates_quotation.real_state_user" sequence="2"/>
+        <!--Client Menu Items-->
+        <menuitem id="real_state_quotation_menu_action" name="Quotations" parent="real_state_menu_categ"
+                  action="real_state_quotation_action_vendor" groups="archilist_estimates_quotation.real_state_vendor"
+                  sequence="3"/>
+
+        <!--Settings Menu Items-->
+        <menuitem id="property_type_menu_action" name="Property Types" parent="real_state_settings_menu_categ"
+                  action="property_type_action" sequence="1"/>
+        <menuitem id="finishing_type_menu_action" name="Finishing Types" parent="real_state_settings_menu_categ"
+                  action="finishing_type_action" sequence="2"/>
+        <menuitem id="vendors_menu_action" name="Vendors" parent="real_state_settings_menu_categ"
+                  action="new_action_partner_supplier_form" sequence="3"/>
+
+
+
+    </data>
+</odoo>

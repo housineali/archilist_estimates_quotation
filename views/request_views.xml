@@ -1,0 +1,400 @@
+<odoo>
+    <data>
+
+        <record id="real_state_request_tree" model="ir.ui.view">
+            <field name="name">real.state.request.tree</field>
+            <field name="model">real.state.request</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="property_type_id"/>
+                    <field name="finishing_type_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="real_state_request_form_client" model="ir.ui.view">
+            <field name="name">real.state.request.form</field>
+            <field name="model">real.state.request</field>
+            <field name="groups_id" eval="[(6, 0, [ref('archilist_estimates_quotation.real_state_client') ])]"/>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="action_client_submit" string="Submit" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_client" states="draft"/>
+                        <button name="action_reviewed" string="Reviewed" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_user" states="to_review"/>
+                        <button name="action_rejected" string="Reject" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_user" states="to_review"/>
+                        <button name="action_estimation_accepted" string="Forward To Contractor" class="oe_highlight"
+                                type="object"
+                                groups="archilist_estimates_quotation.real_state_client" states="estimation_review"/>
+                        <!--<button name="action_estimation_refused" string="Refuse" class="oe_highlight" type="object"-->
+                        <!--groups="archilist_estimates_quotation.real_state_client" states="estimation_review"/>-->
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,to_review,estimation_review,waiting_final_offer"/>
+                    </header>
+
+                    <sheet>
+                        <div class="pull-left">
+                            <label for="name" class="oe_edit_only oe_inline"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group string="Client Property Info">
+                            <group>
+                                <field name="property_type_id" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="finishing_type_id" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_start" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_end" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_duration" readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="property_area" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="toilets_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="rooms_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <!--<field name="client_budget" required="True"-->
+                                <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            </group>
+                        </group>
+                        <group string="Estimations" attrs="{'invisible':[('state','in',['draft','rejected'])]}">
+                            <group>
+                                <field name="estimated_budget" readonly="1"/>
+                                <field name="user_estimated_duration" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="user_estimated_start" readonly="1"/>
+                                <field name="user_estimated_end" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Accepted Quotations"
+                                  attrs="{'invisible':[('state','not in',['waiting_final_offer','quotation'])]}">
+                                <field name="accepted_quotations_ids">
+                                    <tree readonly="True">
+                                        <field name="vendor_estimated_start" readonly="1"/>
+                                        <field name="vendor_estimated_end" readonly="1"/>
+                                        <field name="vendor_estimated_duration" readonly="1"/>
+                                        <field name="vendor_estimated_cost" readonly="1"/>
+                                        <field name="vendor_notes" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Interior">
+                                <group>
+                                    <group>
+                                        <field name="rooms_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="rooms_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="etc_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="toilets_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="toilets_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="interior_product_ids" attrs="{'readonly':[('state','!=','draft')]}" widget="many2many_tags" domain="[('interior','=',True)]"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Exterior">
+                                <group>
+                                    <group>
+                                        <field name="etc_section_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="exterior_product_ids" domain="[('exterior','=',True)]" widget="many2many_tags" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Outdoor">
+                                <group>
+                                    <group>
+                                        <field name="facedes_elements" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="ourdoor_etc_area" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="outdoor_product_ids" attrs="{'readonly':[('state','!=','draft')]}" domain="[('outdoor','=',True)]" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Notes">
+                                <group>
+                                    <field name="client_notes" placeholder="Please write any comment or note"/>
+                                    <field name="user_notes" placeholder="Please write any comment or note"
+                                           attrs="{'invisible':[('state','=','draft')]}" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="real_state_request_form_user" model="ir.ui.view">
+            <field name="name">real.state.request.form</field>
+            <field name="model">real.state.request</field>
+            <field name="groups_id" eval="[(6, 0, [ref('archilist_estimates_quotation.real_state_user') ])]"/>
+
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="action_client_submit" string="Submit" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_client" states="draft"/>
+                        <button name="action_reviewed" string="Reviewed" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_user" states="to_review"/>
+                        <button name="action_rejected" string="Reject" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_user" states="to_review"/>
+                        <button name="action_estimation_accepted" string="Forward To Contractor" class="oe_highlight"
+                                type="object"
+                                groups="archilist_estimates_quotation.real_state_client" states="estimation_review"/>
+                        <button name="action_estimation_refused" string="Refuse" class="oe_highlight" type="object"
+                                groups="archilist_estimates_quotation.real_state_client" states="estimation_review"/>
+                        <button name="%(real_state_quotation_wizard_view_action)d" string="Forward To Contractor"
+                                class="oe_highlight" type="action"
+                                groups="archilist_estimates_quotation.real_state_user" states="waiting_final_offer"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,to_review,estimation_review,waiting_final_offer,quotation"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"
+                             attrs="{'invisible':[('state','not in',['waiting_final_offer','quotation'])]}">
+                            <button name="%(real_state_quotation_action)d" type="action" class="oe_stat_button"
+                                    icon="fa-list-alt">
+                                <field name="quotation_count" widget="statinfo" string="RFQs/Orders"/>
+                            </button>
+
+                        </div>
+                        <div class="pull-left">
+                            <label for="name" class="oe_edit_only oe_inline"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group groups="archilist_estimates_quotation.real_state_user">
+                            <field name="user_id" readonly="True"/>
+                        </group>
+
+                        <group string="Client Property Info">
+                            <group>
+                                <field name="property_type_id" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="finishing_type_id" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_start" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_end" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <field name="client_expected_duration" attrs="{'readonly':[('state','!=','draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="property_area" required="True"
+                                       attrs="{'readonly':[('state','!=','draft')]}"/>
+                                <!--<field name="client_budget" required="True"-->
+                                <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            </group>
+                        </group>
+                        <group string="Estimations" attrs="{'invisible':[('state','in',['draft','rejected'])]}">
+                            <group>
+                                <field name="estimated_budget" attrs="{'readonly':[('state','!=','to_review')]}"/>
+                                <field name="user_estimated_duration"/>
+                            </group>
+                            <group>
+                                <field name="user_estimated_start" attrs="{'readonly':[('state','!=','to_review')]}"/>
+                                <field name="user_estimated_end" attrs="{'readonly':[('state','!=','to_review')]}"/>
+                            </group>
+                        </group>
+
+
+                        <notebook>
+                            <page string="Accepted Quotations"
+                                  attrs="{'invisible':[('state','not in',['waiting_final_offer','quotation'])]}">
+                                <field name="accepted_quotations_ids">
+                                    <tree readonly="True">
+                                        <field name="vendor_estimated_start" readonly="1"/>
+                                        <field name="vendor_estimated_end" readonly="1"/>
+                                        <field name="vendor_estimated_duration" readonly="1"/>
+                                        <field name="vendor_estimated_cost" readonly="1"/>
+                                        <field name="vendor_notes" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Interior">
+                                <group>
+                                    <group>
+                                        <field name="rooms_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="rooms_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="etc_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="toilets_no" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="toilets_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="interior_product_ids" attrs="{'readonly':[('state','!=','draft')]}" widget="many2many_tags" domain="[('interior','=',True)]"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Exterior">
+                                <group>
+                                    <group>
+                                        <field name="etc_section_area" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="exterior_product_ids" domain="[('exterior','=',True)]" widget="many2many_tags" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Outdoor">
+                                <group>
+                                    <group>
+                                        <field name="facedes_elements" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                        <field name="ourdoor_etc_area" required="1" attrs="{'readonly':[('state','!=','draft')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="outdoor_product_ids" attrs="{'readonly':[('state','!=','draft')]}" domain="[('outdoor','=',True)]" widget="many2many_tags"/>
+                                    </group>
+                                </group>
+                            </page>
+
+                            <page string="Notes">
+                                <group>
+                                    <field name="client_notes" placeholder="Please write any comment or note"
+                                           readonly="1"/>
+                                    <field name="user_notes" placeholder="Please write any comment or note"
+                                           attrs="{'invisible':[('state','=','draft')]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="property_type_form_view" model="ir.ui.view">
+            <field name="name">property.type.form</field>
+            <field name="model">property.type</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="finishing_type_form_view" model="ir.ui.view">
+            <field name="name">finishing.type.form</field>
+            <field name="model">finishing.type</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="real_state_request_kanban" model="ir.ui.view">
+            <field name="name">real.state.request.kanban</field>
+            <field name="model">real.state.request</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" group_expand="state" class="o_kanban_kanban_view">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="property_type_id"/>
+                    <field name="finishing_type_id"/>
+                    <field name="property_area"/>
+                    <field name="state"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click">
+                                <!--dropdown delet & color Kanban  -->
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.deletable">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                        </t>
+                                        <li>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--Left side under test-->
+                                <div class="o_kanban_left">
+                                    <h5 class="o_day">
+                                        <field name="name"/>
+                                    </h5>
+                                </div>
+                                <!--Right side-->
+                                <div class="o_kanban_right">
+                                    <p>
+                                        <b>User:</b>
+                                        <field name="user_id"/>
+                                    </p>
+                                    <p>
+                                        <b>Property Type:</b>
+                                        <field name="property_type_id"/>
+                                    </p>
+                                    <p>
+                                        <b>Finishing Type:</b>
+                                        <field name="finishing_type_id"/>
+                                    </p>
+                                    <p>
+                                        <b>Property Area:</b>
+                                        <field name="property_area"/>
+                                    </p>
+
+
+                                </div>
+
+                                <div class="o_kanban_button">
+                                </div>
+
+
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

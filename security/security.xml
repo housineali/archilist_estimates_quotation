@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="real_state_category" model="ir.module.category">
+            <field name="name">Real State</field>
+            <field name="sequence" eval="1"/>
+        </record>
+
+        <record id="real_state_client" model="res.groups">
+            <field name="name">Client</field>
+            <field name="category_id" ref="real_state_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+        <record id="real_state_vendor" model="res.groups">
+            <field name="name">Contractor</field>
+            <field name="category_id" ref="real_state_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+        <record id="real_state_user" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="real_state_category"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_portal'))]"/>
+        </record>
+
+        <!--Record Rules-->
+        <record id="client_see_only_own_requests" model="ir.rule">
+            <field name="name">Client See Only His Own Request</field>
+            <field ref="model_real_state_request" name="model_id"/>
+            <field name="domain_force">[('user_id', '=', user.id )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_client'))]"/>
+        </record>
+        <record id="user_see_all_requests" model="ir.rule">
+            <field name="name">User See all Request</field>
+            <field ref="model_real_state_request" name="model_id"/>
+            <field name="domain_force">[('state', '!=', 'draft' )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_user'))]"/>
+        </record>
+
+
+        <record id="client_see_only_own_quotation" model="ir.rule">
+            <field name="name">Client See Only His Own RFQ</field>
+            <field ref="model_real_state_quotation" name="model_id"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_vendor'))]"/>
+        </record>
+        <record id="user_see_all_quotation" model="ir.rule">
+            <field name="name">User See all RFQ</field>
+            <field ref="model_real_state_quotation" name="model_id"/>
+            <field name="domain_force">[(1, '=', 1 )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_user'))]"/>
+        </record>
+
+    </data>
+</odoo>
