@@ -79,14 +79,14 @@ class Request(models.Model):
     toilets_no = fields.Integer(string="Number Of Bathrooms", required=False, )
     toilets_area = fields.Float(string="Bathrooms Area",  required=False, )
     etc_area = fields.Float(string="Etc Area",  required=False, )
-    interior_product_ids = fields.Many2many(comodel_name="product.product", string="Products", )
+    interior_product_ids = fields.Many2many(comodel_name="product.product",relation='interior_product_relation', string="Products", )
     # Exterior
     etc_section_area = fields.Float(string="Etc Section Area",  required=False, )
-    exterior_product_ids = fields.Many2many(comodel_name="product.product", string="Products", )
+    exterior_product_ids = fields.Many2many(comodel_name="product.product",relation='exterior_product_relation', string="Products", )
     # Landscape and Outdoor
     facedes_elements = fields.Float(string="Facades & Roof Elements",  required=False, )
     ourdoor_etc_area = fields.Float(string="Etc Area",  required=False, )
-    outdoor_product_ids = fields.Many2many(comodel_name="product.product", string="Products", )
+    outdoor_product_ids = fields.Many2many(comodel_name="product.product",relation='outdoor_product_relation', string="Products", )
 
     @api.model
     def create(self, vals):
