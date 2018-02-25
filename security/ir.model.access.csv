@@ -15,3 +15,26 @@ access_real_state_quotation_accepted_user,real.state.quotation.accepted User,mod
 access_real_state_quotation_client,real.state.quotation Client,model_real_state_quotation,archilist_estimates_quotation.real_state_client,1,1,1,0
 access_real_state_quotation_vendor,real.state.quotation Vendor,model_real_state_quotation,archilist_estimates_quotation.real_state_vendor,1,1,1,0
 access_real_state_quotation_user,real.state.quotation User,model_real_state_quotation,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_product_line_client,product.line Client,model_product_line,archilist_estimates_quotation.real_state_client,1,1,1,1
+access_product_line_vendor,product.line Vendor,model_product_line,archilist_estimates_quotation.real_state_vendor,1,1,1,1
+access_product_line_user,product.line User,model_product_line,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+
+access_product_template_client,product.template Client,product.model_product_template,archilist_estimates_quotation.real_state_client,1,0,0,0
+access_product_template_vendor,product.template Vendor,product.model_product_template,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_product_template_user,product.template User,product.model_product_template,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_product_category_client,product.category Client,product.model_product_category,archilist_estimates_quotation.real_state_client,1,0,0,0
+access_product_category_vendor,product.category Vendor,product.model_product_category,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_product_category_user,product.category User,product.model_product_category,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_product_uom_client,product.uom Client,product.model_product_uom,archilist_estimates_quotation.real_state_client,1,0,0,0
+access_product_uom_vendor,product.uom Vendor,product.model_product_uom,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_product_uom_user,product.uom User,product.model_product_uom,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_product_product_client,product.product Client,product.model_product_product,archilist_estimates_quotation.real_state_client,1,0,0,0
+access_product_product_vendor,product.product Vendor,product.model_product_product,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_product_product_user,product.product User,product.model_product_template,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+
