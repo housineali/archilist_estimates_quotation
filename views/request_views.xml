@@ -85,108 +85,156 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Interior">
-                                <group>
-                                    <group>
-                                        <field name="rooms_no" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="bedroom_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="living_rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="reception_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="office_space_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="lobby_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="toilets_no" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="toilets_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="counter_bar_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="corridor_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="stair_case_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="balcony_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                </group>
-                                <field name="interior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                            <!--<page string="Interior">-->
+                            <!--<group>-->
+                            <!--<group>-->
+                            <!--<field name="rooms_no" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="rooms_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="bedroom_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="living_rooms_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="rooms_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="reception_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="office_space_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="lobby_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                            <!--<field name="toilets_no" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="toilets_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="counter_bar_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="corridor_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="stair_case_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="balcony_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--</group>-->
+                            <!--<field name="interior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">-->
+                            <!--<tree editable="bottom">-->
+                            <!--<field name="product_id" options="{'no_create':True}"-->
+                            <!--domain="[('interior','=',True)]" required="1"/>-->
+                            <!--<field name="amount" required="1"/>-->
+                            <!--<field name="uom_id" options="{'no_create':True}" readonly="1"/>-->
+                            <!--</tree>-->
+                            <!--</field>-->
+                            <!--</page>-->
+                            <!--<page string="Exterior">-->
+                            <!--<group>-->
+                            <!--<group>-->
+                            <!--<field name="building_facades_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="building_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="garage_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="walls_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                            <!--<field name="entrance_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="gates_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="outdoor_stairs_area" required="True"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--</group>-->
+                            <!--<field name="exterior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">-->
+                            <!--<tree editable="bottom">-->
+                            <!--<field name="product_id" options="{'no_create':True}"-->
+                            <!--domain="[('exterior','=',True)]" required="1"/>-->
+                            <!--<field name="amount" required="1"/>-->
+                            <!--<field name="uom_id" options="{'no_create':True}" readonly="1"/>-->
+                            <!--</tree>-->
+                            <!--</field>-->
+
+                            <!--</page>-->
+                            <!--<page string="Outdoor">-->
+                            <!--<group>-->
+                            <!--<group>-->
+                            <!--<field name="facedes_elements" required="1"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="walk_ways_area" required="1"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="greens_area" required="1"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                            <!--<field name="pools_area" required="1"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--<field name="sheds_area" required="1"-->
+                            <!--attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                            <!--</group>-->
+                            <!--</group>-->
+                            <!--<field name="outdoor_product_ids" attrs="{'readonly':[('state','!=','draft')]}">-->
+                            <!--<tree editable="bottom">-->
+                            <!--<field name="product_id" options="{'no_create':True}"-->
+                            <!--domain="[('outdoor','=',True)]" required="1"/>-->
+                            <!--<field name="amount" required="1"/>-->
+                            <!--<field name="uom_id" options="{'no_create':True}" readonly="1"/>-->
+                            <!--</tree>-->
+                            <!--</field>-->
+
+                            <!--</page>-->
+                            <page string="Interior Products">
+                                <field name="interior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Exterior Products">
+                                <field name="exterior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','exterior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+
+                            <page string="Outdoor Products">
+                                <field name="outdoor_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','outdoor')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="Products">
+                                <button name="action_get_products" string="Get Available Products"
+                                        class="oe_highlight" type="object"/>
+
+                                <field name="product_ids" attrs="{'readonly':[('state','!=','draft')]}">
                                     <tree editable="bottom">
                                         <field name="product_id" options="{'no_create':True}"
                                                domain="[('interior','=',True)]" required="1"/>
                                         <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
+                                        <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Exterior">
-                                <group>
-                                    <group>
-                                        <field name="building_facades_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="building_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="garage_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="walls_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="entrance_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="gates_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="outdoor_stairs_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                </group>
-                                <field name="exterior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
-                                    <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
-                                               domain="[('exterior','=',True)]" required="1"/>
-                                        <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
-                                    </tree>
-                                </field>
 
-                            </page>
-                            <page string="Outdoor">
-                                <group>
-                                    <group>
-                                        <field name="facedes_elements" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="walk_ways_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="greens_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="pools_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="sheds_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                </group>
-                                <field name="outdoor_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
-                                    <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
-                                               domain="[('outdoor','=',True)]" required="1"/>
-                                        <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
-                                    </tree>
-                                </field>
-
-                            </page>
 
                             <page string="Notes">
                                 <group>
@@ -292,107 +340,38 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Interior">
+                            <page string="Products">
+
                                 <group>
                                     <group>
-                                        <field name="rooms_no" required="True"
+                                        <field name="interior_categ_ids" widget="many2many_tags"
+                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','interior')]"
+                                               options="{'no_create':True}"
                                                attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="bedroom_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="living_rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="rooms_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="reception_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="office_space_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="lobby_area" required="True"
+                                        <field name="exterior_categ_ids" widget="many2many_tags"
+                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','exterior')]"
+                                               options="{'no_create':True}"
                                                attrs="{'readonly':[('state','!=','draft')]}"/>
                                     </group>
                                     <group>
-                                        <field name="toilets_no" required="True"
+                                        <field name="outdoor_categ_ids" widget="many2many_tags"
+                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','outdoor')]"
+                                               options="{'no_create':True}"
                                                attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="toilets_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="counter_bar_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="corridor_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="stair_case_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="balcony_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                                        <button name="action_get_products" string="Get Available Products"
+                                                class="oe_highlight" type="object"/>
+
                                     </group>
                                 </group>
-                                <field name="interior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
+                                <field name="product_ids" attrs="{'readonly':[('state','!=','draft')]}">
                                     <tree editable="bottom">
                                         <field name="product_id" options="{'no_create':True}"
                                                domain="[('interior','=',True)]" required="1"/>
                                         <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
+                                        <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                     </tree>
                                 </field>
-                            </page>
-                            <page string="Exterior">
-                                <group>
-                                    <group>
-                                        <field name="building_facades_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="building_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="garage_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="walls_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="entrance_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="gates_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="outdoor_stairs_area" required="True"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                </group>
-                                <field name="exterior_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
-                                    <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
-                                               domain="[('exterior','=',True)]" required="1"/>
-                                        <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
-                                    </tree>
-                                </field>
-
-                            </page>
-                            <page string="Outdoor">
-                                <group>
-                                    <group>
-                                        <field name="facedes_elements" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="walk_ways_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="greens_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="pools_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="sheds_area" required="1"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                </group>
-                                <field name="outdoor_product_ids" attrs="{'readonly':[('state','!=','draft')]}">
-                                    <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
-                                               domain="[('outdoor','=',True)]" required="1"/>
-                                        <field name="amount" required="1"/>
-                                        <field name="uom_id" options="{'no_create':True}" required="1"/>
-                                    </tree>
-                                </field>
-
                             </page>
                             <page string="Notes">
                                 <group>

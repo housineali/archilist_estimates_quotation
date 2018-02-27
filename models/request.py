@@ -73,45 +73,40 @@ class Request(models.Model):
                                               string="", required=False, )
     color = fields.Integer(string="", required=False, )
 
-    # Interior
-    rooms_no = fields.Integer(string="Number Of Rooms", required=False, )
-    rooms_area = fields.Float(string="Rooms Area",  required=False, )
-    toilets_no = fields.Integer(string="Number Of Bathrooms", required=False, )
-    toilets_area = fields.Float(string="Bathrooms Area",  required=False, )
-    bedroom_area = fields.Float(string="Bedrooms Area",  required=False, )
-    living_rooms_area = fields.Float(string="Living Rooms Area",  required=False, )
-    reception_area = fields.Float(string="Reception Area",  required=False, )
-    office_space_area = fields.Float(string="Office Space Area",  required=False, )
-    kitchen_area = fields.Float(string="Kitchen Area",  required=False, )
-    counter_bar_area = fields.Float(string="Counter Bar Area",  required=False, )
-    corridor_area = fields.Float(string="Corridor Area",  required=False, )
-    lobby_area = fields.Float(string="Lobby / Foyer Area",  required=False, )
-    stair_case_area = fields.Float(string="Stair Case Area",  required=False, )
-    balcony_area = fields.Float(string="Balcony / Terrace Area",  required=False, )
-    interior_product_ids = fields.One2many(comodel_name="product.line",inverse_name='request_interior_id', string="Products", )
-    # Exterior
-    building_facades_area = fields.Float(string="Building Facades Area",  required=False, )
-    building_area = fields.Float(string="Roof Area",  required=False, )
-    garage_area = fields.Float(string="Garage Area",  required=False, )
-    walls_area = fields.Float(string="Walls & Fences Area",  required=False, )
-    entrance_area = fields.Float(string="Entrance Area",  required=False, )
-    gates_area = fields.Float(string="Gates Area",  required=False, )
-    outdoor_stairs_area = fields.Float(string="Outdoor Stairs / Ladders Area",  required=False, )
-    security_area = fields.Float(string="Security Area",  required=False, )
-    exterior_product_ids = fields.One2many(comodel_name="product.line",inverse_name='request_exterior_id', string="Products", )
-    # Landscape and Outdoor
-    facedes_elements = fields.Float(string="Facades & Roof Elements",  required=False, )
-    walk_ways_area = fields.Float(string="Walkways / Pavements Area",  required=False, )
-    greens_area = fields.Float(string="Greens Area",  required=False, )
-    pools_area = fields.Float(string="Lakes & Pools Area",  required=False, )
-    sheds_area = fields.Float(string="Sheds & Pavilions Area",  required=False, )
-    outdoor_product_ids = fields.One2many(comodel_name="product.line",inverse_name='request_outdoor_id', string="Products", )
+    interior_categ_ids = fields.Many2many(comodel_name="product.category", relation="interior_categ_rel",  string="", )
+    exterior_categ_ids = fields.Many2many(comodel_name="product.category", relation="exterior_categ_rel",  string="", )
+    outdoor_categ_ids = fields.Many2many(comodel_name="product.category", relation="outdoor_categ_rel",  string="", )
+    product_ids = fields.One2many(comodel_name="product.line",inverse_name='request_id', string="Products", )
+
 
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
             vals['name'] = self.env['ir.sequence'].next_by_code('real.state.request') or '/'
-        return super(Request, self).create(vals)
+        res= super(Request, self).create(vals)
+        return res
+
+
+    @api.one
+    def action_get_products(self):
+        for line in self.product_ids:
+            line.unlink()
+        for categ in self.interior_categ_ids:
+            for prod in categ.product_ids:
+                self.product_ids.create(
+                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
+        for categ in self.exterior_categ_ids:
+            for prod in categ.product_ids:
+                self.product_ids.create(
+                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
+        for categ in self.outdoor_categ_ids:
+            for prod in categ.product_ids:
+                self.product_ids.create(
+                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
+
+        
+
+
 
     def get_mail_url(self):
         return self.get_share_url()
@@ -206,8 +201,6 @@ class ProductInteriorLines(models.Model):
     _name = 'product.line'
 
     product_id = fields.Many2one(comodel_name="product.product", string="Product", required=False, )
-    request_interior_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
-    request_exterior_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
-    request_outdoor_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
+    request_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
     uom_id = fields.Many2one(comodel_name="product.uom", string="Unit of measure", required=False, )
     amount = fields.Float(string="Amount",  required=False, )

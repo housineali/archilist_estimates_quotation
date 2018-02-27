@@ -17,3 +17,7 @@ class FinishingType(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
     name = fields.Char(string="name", required=False, track_visibility='onchange')
     active = fields.Boolean(string="active", default=True, track_visibility='onchange')
+class ProductCategory(models.Model):
+    _name = "product.category"
+    _inherit = "product.category"
+    finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Type", required=False, )

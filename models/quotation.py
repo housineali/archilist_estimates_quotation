@@ -39,8 +39,6 @@ class RequestQuotation(models.Model):
     finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Type",
                                         related='request_id.finishing_type_id', readonly=True, )
     property_area = fields.Float(string="Property Area", related='request_id.property_area', readonly=True, )
-    toilets_no = fields.Integer(string="Number Of Toilets", related='request_id.toilets_no', readonly=True, )
-    rooms_no = fields.Integer(string="Number Of Rooms", related='request_id.rooms_no', readonly=True, )
     vendor_estimated_cost = fields.Float(string="Estimated Cost", required=False, )
     vendor_estimated_start = fields.Date(string="Estimated Start", required=False, )
     vendor_estimated_end = fields.Date(string="Estimated End", required=False, )

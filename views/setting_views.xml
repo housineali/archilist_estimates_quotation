@@ -36,6 +36,19 @@
             </field>
         </record>
 
-           </data>
+        <record id="inherit_product_category_form_view2" model="ir.ui.view">
+            <field name="name">product.category.form</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="archilist_product.inherit_product_category_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="finishing_type_id" required="1" options="{'no_create': True}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
 </odoo>
 
