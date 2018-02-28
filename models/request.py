@@ -73,19 +73,17 @@ class Request(models.Model):
                                               string="", required=False, )
     color = fields.Integer(string="", required=False, )
 
-    interior_categ_ids = fields.Many2many(comodel_name="product.category", relation="interior_categ_rel",  string="", )
-    exterior_categ_ids = fields.Many2many(comodel_name="product.category", relation="exterior_categ_rel",  string="", )
-    outdoor_categ_ids = fields.Many2many(comodel_name="product.category", relation="outdoor_categ_rel",  string="", )
-    product_ids = fields.One2many(comodel_name="product.line",inverse_name='request_id', string="Products", )
-
+    interior_categ_ids = fields.Many2many(comodel_name="product.category", relation="interior_categ_rel", string="", )
+    exterior_categ_ids = fields.Many2many(comodel_name="product.category", relation="exterior_categ_rel", string="", )
+    outdoor_categ_ids = fields.Many2many(comodel_name="product.category", relation="outdoor_categ_rel", string="", )
+    product_ids = fields.One2many(comodel_name="product.line", inverse_name='request_id', string="Products", )
 
     @api.model
     def create(self, vals):
         if vals.get('name', 'New') == 'New':
             vals['name'] = self.env['ir.sequence'].next_by_code('real.state.request') or '/'
-        res= super(Request, self).create(vals)
+        res = super(Request, self).create(vals)
         return res
-
 
     @api.one
     def action_get_products(self):
@@ -94,19 +92,18 @@ class Request(models.Model):
         for categ in self.interior_categ_ids:
             for prod in categ.product_ids:
                 self.product_ids.create(
-                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
+                    {'request_id': self.id, 'product_id': prod.id, 'unit_price': prod.list_price,
+                     'uom_id': categ.uom_id.id, 'category_id': categ.id})
         for categ in self.exterior_categ_ids:
             for prod in categ.product_ids:
                 self.product_ids.create(
-                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
+                    {'request_id': self.id, 'product_id': prod.id, 'unit_price': prod.list_price,
+                     'uom_id': categ.uom_id.id, 'category_id': categ.id})
         for categ in self.outdoor_categ_ids:
             for prod in categ.product_ids:
                 self.product_ids.create(
-                    {'request_id': self.id, 'product_id': prod.id, 'uom_id': categ.id})
-
-        
-
-
+                    {'request_id': self.id, 'product_id': prod.id, 'unit_price': prod.list_price,
+                     'uom_id': categ.uom_id.id, 'category_id': categ.id})
 
     def get_mail_url(self):
         return self.get_share_url()
@@ -197,10 +194,18 @@ class AcceptedQuotations(models.Model):
     vendor_estimated_duration = fields.Char("Duration", )
     vendor_notes = fields.Text(string="Vendor Notes", required=False, )
 
+
 class ProductInteriorLines(models.Model):
     _name = 'product.line'
 
+    @api.one
+    def _compute_total_cost(self):
+        self.total_cost = self.unit_price * self.amount
+
     product_id = fields.Many2one(comodel_name="product.product", string="Product", required=False, )
+    category_id = fields.Many2one(comodel_name="product.category", string="Category", required=False, )
     request_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
     uom_id = fields.Many2one(comodel_name="product.uom", string="Unit of measure", required=False, )
-    amount = fields.Float(string="Amount",  required=False, )
+    amount = fields.Float(string="Amount", required=False, )
+    unit_price = fields.Float(string="Unit Price", required=False, )
+    total_cost = fields.Float(string="Total Cost", compute=_compute_total_cost)

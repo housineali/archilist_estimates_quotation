@@ -14,7 +14,7 @@ Key Features:
 * After Client Acceptance admin contact with contractors to get offers to do that work. 
 """,
     'author': 'Binary Labs LLC & Mahmoud Elmenshawy',
-    'website': '',
+    'website': 'https://www.linkedin.com/in/mahmoudelmenshawy/',
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml

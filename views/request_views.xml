@@ -229,8 +229,11 @@
                                     <tree editable="bottom">
                                         <field name="product_id" options="{'no_create':True}"
                                                domain="[('interior','=',True)]" required="1"/>
+                                        <field name="category_id" readonly="1"/>
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
+                                        <field name="unit_price" readonly="1"/>
+                                        <field name="total_cost" readonly="1"/>
                                     </tree>
                                 </field>
                             </page>
@@ -340,36 +343,53 @@
                                     </tree>
                                 </field>
                             </page>
+                            <page string="Interior Products">
+                                <field name="interior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Exterior Products">
+                                <field name="exterior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','exterior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+
+                            <page string="Outdoor Products">
+                                <field name="outdoor_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','outdoor')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
                             <page string="Products">
+                                <button name="action_get_products" string="Get Available Products"
+                                        class="oe_highlight" type="object"/>
 
-                                <group>
-                                    <group>
-                                        <field name="interior_categ_ids" widget="many2many_tags"
-                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','interior')]"
-                                               options="{'no_create':True}"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                        <field name="exterior_categ_ids" widget="many2many_tags"
-                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','exterior')]"
-                                               options="{'no_create':True}"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-                                    </group>
-                                    <group>
-                                        <field name="outdoor_categ_ids" widget="many2many_tags"
-                                               domain="['|',('finishing_type_id','=',finishing_type_id),('type','=','outdoor')]"
-                                               options="{'no_create':True}"
-                                               attrs="{'readonly':[('state','!=','draft')]}"/>
-
-                                        <button name="action_get_products" string="Get Available Products"
-                                                class="oe_highlight" type="object"/>
-
-                                    </group>
-                                </group>
                                 <field name="product_ids" attrs="{'readonly':[('state','!=','draft')]}">
                                     <tree editable="bottom">
                                         <field name="product_id" options="{'no_create':True}"
                                                domain="[('interior','=',True)]" required="1"/>
+                                        <field name="category_id" readonly="1"/>
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
+                                        <field name="unit_price" readonly="1"/>
+                                        <field name="total_cost" readonly="1"/>
                                     </tree>
                                 </field>
                             </page>

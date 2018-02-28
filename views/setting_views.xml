@@ -43,7 +43,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='type']" position="after">
-                    <field name="finishing_type_id" required="1" options="{'no_create': True}"/>
+                    <field name="finishing_type_id" options="{'no_create': True}"/>
                 </xpath>
 
             </field>
