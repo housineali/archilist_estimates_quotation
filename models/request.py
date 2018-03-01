@@ -199,6 +199,7 @@ class ProductInteriorLines(models.Model):
     _name = 'product.line'
 
     @api.one
+    @api.depends('amount', 'unit_price')
     def _compute_total_cost(self):
         self.total_cost = self.unit_price * self.amount
 

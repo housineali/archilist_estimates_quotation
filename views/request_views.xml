@@ -221,7 +221,7 @@
 
                                 </field>
                             </page>
-                            <page string="Products">
+                            <page string="Default Products">
                                 <button name="action_get_products" string="Get Available Products"
                                         class="oe_highlight" type="object"/>
 
@@ -233,7 +233,7 @@
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                         <field name="unit_price" readonly="1"/>
-                                        <field name="total_cost" readonly="1"/>
+                                        <field name="total_cost" readonly="1" sum="Total"/>
                                     </tree>
                                 </field>
                             </page>
@@ -377,7 +377,7 @@
 
                                 </field>
                             </page>
-                            <page string="Products">
+                            <page string="Default Products">
                                 <button name="action_get_products" string="Get Available Products"
                                         class="oe_highlight" type="object"/>
 
@@ -389,7 +389,7 @@
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                         <field name="unit_price" readonly="1"/>
-                                        <field name="total_cost" readonly="1"/>
+                                        <field name="total_cost" readonly="1" sum="Total"/>
                                     </tree>
                                 </field>
                             </page>
