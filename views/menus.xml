@@ -61,14 +61,27 @@
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    Here, you can create new property type
+                    Here, you can create new property budget
+                </p>
+                <p>
+                </p>
+            </field>
+        </record>
+        <record id="property_location_action" model="ir.actions.act_window">
+            <field name="name">Property Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.location</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here, you can create new property location
                 </p>
                 <p>
                 </p>
             </field>
         </record>
         <record id="finishing_type_action" model="ir.actions.act_window">
-            <field name="name">Finishing Type</field>
+            <field name="name">Finishing Budget</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">finishing.type</field>
             <field name="view_mode">tree,form</field>
@@ -127,10 +140,12 @@
         <!--Settings Menu Items-->
         <menuitem id="property_type_menu_action" name="Property Types" parent="real_state_settings_menu_categ"
                   action="property_type_action" sequence="1"/>
-        <menuitem id="finishing_type_menu_action" name="Finishing Types" parent="real_state_settings_menu_categ"
-                  action="finishing_type_action" sequence="2"/>
+        <menuitem id="property_location_menu_action" name="Property Locations" parent="real_state_settings_menu_categ"
+                  action="property_location_action" sequence="2"/>
+        <menuitem id="finishing_type_menu_action" name="Finishing Budgets" parent="real_state_settings_menu_categ"
+                  action="finishing_type_action" sequence="3"/>
         <menuitem id="vendors_menu_action" name="Vendors" parent="real_state_settings_menu_categ"
-                  action="new_action_partner_supplier_form" sequence="3"/>
+                  action="new_action_partner_supplier_form" sequence="4"/>
 
 
 

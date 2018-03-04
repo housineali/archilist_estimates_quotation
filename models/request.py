@@ -46,6 +46,9 @@ class Request(models.Model):
             if self.user_estimated_start > self.user_estimated_end:
                 raise exceptions.ValidationError('End Date Must Be After Start Date')
 
+
+
+
     name = fields.Char('Order Reference', required=True, index=True, copy=False, default='New')
     user_id = fields.Many2one('res.users', string='Requester', index=True, track_visibility='onchange',
                               default=lambda self: self.env.uid)
@@ -56,7 +59,7 @@ class Request(models.Model):
                                         ('rejected', 'Rejected'), ('estimation_refused', 'Estimation Refused'), ],
                              default='draft')
     property_type_id = fields.Many2one(comodel_name="property.type", string="Property Type", required=False, )
-    finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Type", required=False, )
+    finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Budget", required=False, )
     property_area = fields.Float(string="Property Area", required=False, )
     # client_budget = fields.Float(string="Budget", required=False, )
     client_expected_start = fields.Date(string="Expected Start", required=False, )
@@ -73,10 +76,25 @@ class Request(models.Model):
                                               string="", required=False, )
     color = fields.Integer(string="", required=False, )
 
+    rooms_no = fields.Integer(string="Number Of Romms", required=False, )
+    bathrooms_no = fields.Integer(string="Number Of Bathrooms", required=False, )
+    landscape = fields.Float(string="Landscape Area", required=False, )
+    location_id = fields.Many2one(comodel_name="property.location", string="Property Location", required=False, )
+    floor_no = fields.Integer(string="Floor Number", required=False, )
+    visit = fields.Boolean(string="Visit Site", )
+    design_drawing = fields.Selection(string="Design & Drawing",
+                                      selection=[('2d_design_drawing', '2D Design $ Drawing'),
+                                                 ('3d_design', '3D Design'),
+                                                 ('3d_design_2d_drawing', '3D Design & 2D Drawing'),
+                                                 ('detailed_3d', 'Detailed 3D'), ], required=False, )
+    property_image = fields.Binary(string="Property Image", )
+    drawing_file = fields.Binary(string="Drawing File", )
+
     interior_categ_ids = fields.Many2many(comodel_name="product.category", relation="interior_categ_rel", string="", )
     exterior_categ_ids = fields.Many2many(comodel_name="product.category", relation="exterior_categ_rel", string="", )
     outdoor_categ_ids = fields.Many2many(comodel_name="product.category", relation="outdoor_categ_rel", string="", )
     product_ids = fields.One2many(comodel_name="product.line", inverse_name='request_id', string="Products", )
+
 
     @api.model
     def create(self, vals):
@@ -124,6 +142,10 @@ class Request(models.Model):
         mail_obj = self.env['mail.mail'].search([('id', '=', mail)])
 
         mail_obj.recipient_ids = recipient_partners
+        sum = 0
+        for line in self.product_ids:
+            sum += line.total_cost
+        self.estimated_budget = sum
 
     @api.multi
     def action_reviewed(self):
@@ -206,6 +228,7 @@ class ProductInteriorLines(models.Model):
     product_id = fields.Many2one(comodel_name="product.product", string="Product", required=False, )
     category_id = fields.Many2one(comodel_name="product.category", string="Category", required=False, )
     request_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
+    quotation_id = fields.Many2one(comodel_name="real.state.quotation", string="", required=False, )
     uom_id = fields.Many2one(comodel_name="product.uom", string="Unit of measure", required=False, )
     amount = fields.Float(string="Amount", required=False, )
     unit_price = fields.Float(string="Unit Price", required=False, )

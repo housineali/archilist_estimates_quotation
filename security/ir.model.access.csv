@@ -3,6 +3,9 @@ access_real_state_request_client,real.state.request Client,model_real_state_requ
 access_real_state_request_vendor,real.state.request Vendor,model_real_state_request,archilist_estimates_quotation.real_state_vendor,1,0,0,0
 access_real_state_request_user,real.state.request User,model_real_state_request,archilist_estimates_quotation.real_state_user,1,1,1,1
 
+access_property_location,property.location,model_property_location,,1,0,0,0
+access_property_location_user,property.location User,model_property_location,archilist_estimates_quotation.real_state_user,1,1,1,1
+
 access_property_type,property.type,model_property_type,,1,0,0,0
 access_property_type_user,property.type User,model_property_type,archilist_estimates_quotation.real_state_user,1,1,1,1
 

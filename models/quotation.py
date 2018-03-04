@@ -36,7 +36,7 @@ class RequestQuotation(models.Model):
     request_id = fields.Many2one(comodel_name="real.state.request", string="Request", required=False, )
     property_type_id = fields.Many2one(comodel_name="property.type", string="Property Type",
                                        related='request_id.property_type_id', readonly=True, )
-    finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Type",
+    finishing_type_id = fields.Many2one(comodel_name="finishing.type", string="Finishing Budget",
                                         related='request_id.finishing_type_id', readonly=True, )
     property_area = fields.Float(string="Property Area", related='request_id.property_area', readonly=True, )
     vendor_estimated_cost = fields.Float(string="Estimated Cost", required=False, )
@@ -44,6 +44,29 @@ class RequestQuotation(models.Model):
     vendor_estimated_end = fields.Date(string="Estimated End", required=False, )
     vendor_estimated_duration = fields.Char("Estimated Duration", compute=_compute_vendor_estimated_duration, )
     vendor_notes = fields.Text(string="Vendor Notes", required=False, )
+
+    rooms_no = fields.Integer(string="Number Of Romms", related='request_id.rooms_no')
+    bathrooms_no = fields.Integer(string="Number Of Bathrooms", related='request_id.bathrooms_no')
+    landscape = fields.Float(string="Landscape Area", related='request_id.landscape')
+    location_id = fields.Many2one(comodel_name="property.location", string="Property Location",
+                                  related='request_id.location_id')
+    floor_no = fields.Integer(string="Floor Number", related='request_id.floor_no')
+    visit = fields.Boolean(string="Visit Site", related='request_id.visit')
+    design_drawing = fields.Selection(string="Design & Drawing",
+                                      selection=[('2d_design_drawing', '2D Design $ Drawing'),
+                                                 ('3d_design', '3D Design'),
+                                                 ('3d_design_2d_drawing', '3D Design & 2D Drawing'),
+                                                 ('detailed_3d', 'Detailed 3D'), ], related='request_id.design_drawing')
+    property_image = fields.Binary(string="Property Image", related='request_id.property_image')
+    drawing_file = fields.Binary(string="Drawing File", related='request_id.drawing_file')
+
+    interior_categ_ids = fields.Many2many(comodel_name="product.category",
+                                          related='request_id.interior_categ_ids', )
+    exterior_categ_ids = fields.Many2many(comodel_name="product.category",
+                                          related='request_id.exterior_categ_ids', )
+    outdoor_categ_ids = fields.Many2many(comodel_name="product.category",
+                                         related='request_id.outdoor_categ_ids', )
+    product_ids = fields.One2many(comodel_name="product.line", inverse_name='quotation_id', string="Products", )
 
     @api.model
     def create(self, vals):
@@ -63,7 +86,7 @@ class RequestQuotation(models.Model):
     def action_user_accept(self):
         self.write({'state': 'accepted'})
         self.request_id.state = 'quotation'
-        line=self.request_id.accepted_quotations_ids.create({'request_id':self.request_id.id})
+        line = self.request_id.accepted_quotations_ids.create({'request_id': self.request_id.id})
         line.vendor_estimated_cost = self.vendor_estimated_cost
         line.vendor_estimated_start = self.vendor_estimated_start
         line.vendor_estimated_end = self.vendor_estimated_end

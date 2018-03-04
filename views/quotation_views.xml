@@ -71,11 +71,23 @@
                                 <field name="property_type_id"/>
                                 <field name="finishing_type_id"/>
                             </group>
+                        </group>
+                        <group>
                             <group>
-                                <field name="property_area"/>
-                                <!--<field name="toilets_no"/>-->
-                                <!--<field name="rooms_no"/>-->
+                                <field name="property_area" readonly="True"/>
+                                <field name="rooms_no" readonly="True"/>
+                                <field name="bathrooms_no" readonly="True"/>
+                                <field name="landscape" readonly="True"/>
+                                <field name="location_id" readonly="True"/>
                             </group>
+                            <group>
+                                <field name="floor_no" readonly="True"/>
+                                <field name="visit" readonly="True"/>
+                                <field name="design_drawing" readonly="True"/>
+                                <field name="drawing_file" readonly="True"/>
+                                <field name="property_image" readonly="True" widget='image' class="oe_avatar"/>
+                            </group>
+
                         </group>
                         <group string="Quotation" attrs="{'invisible':[('state','=','draft')]}">
                             <group>
@@ -88,6 +100,57 @@
                             </group>
                             <field name="vendor_notes" placeholder="Please write any comment or note"/>
                         </group>
+
+                        <notebook>
+                            <page string="Interiors">
+                                <field name="interior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Exteriors">
+                                <field name="exterior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','exterior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+
+                            <page string="Outdoors">
+                                <field name="outdoor_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','outdoor')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="Products">
+
+                                <field name="product_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id" options="{'no_create':True}"
+                                               domain="[('interior','=',True)]" required="1"/>
+                                        <field name="category_id" readonly="1"/>
+                                        <field name="amount" required="1"/>
+                                        <field name="uom_id" options="{'no_create':True}" readonly="1"/>
+                                        <field name="unit_price" readonly="1"/>
+                                        <field name="total_cost" readonly="1" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -126,9 +189,23 @@
                                 <field name="property_type_id"/>
                                 <field name="finishing_type_id"/>
                             </group>
+                        </group>
+                        <group>
                             <group>
-                                <field name="property_area"/>
+                                <field name="property_area" required="True"/>
+                                <field name="rooms_no" required="True"/>
+                                <field name="bathrooms_no" required="True"/>
+                                <field name="landscape" required="True"/>
+                                <field name="location_id" required="True"/>
                             </group>
+                            <group>
+                                <field name="floor_no" required="True"/>
+                                <field name="visit"/>
+                                <field name="design_drawing"/>
+                                <field name="drawing_file"/>
+                                <field name="property_image" widget='image' class="oe_avatar"/>
+                            </group>
+
                         </group>
                         <group string="Quotation" attrs="{'invisible':[('state','=','draft')]}">
                             <group>
@@ -142,6 +219,59 @@
                             <field name="vendor_notes" placeholder="Please write any comment or note"/>
 
                         </group>
+
+                        <notebook>
+
+                            <page string="Interiors">
+                                <field name="interior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                            <page string="Exteriors">
+                                <field name="exterior_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','exterior')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+
+                            <page string="Outdoors">
+                                <field name="outdoor_categ_ids"
+                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','outdoor')]"
+                                       options="{'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft')]}">
+                                    <tree>
+                                        <field name="name" string="Interior Category Name"/>
+                                    </tree>
+
+                                </field>
+                            </page>
+                            <page string="Products">
+                                <field name="product_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id" options="{'no_create':True}"
+                                               domain="['|','|',('categ_id', 'in', parent.interior_categ_ids),('categ_id', 'in', parent.exterior_categ_ids),('categ_id', 'in', parent.outdoor_categ_ids)]"
+                                               required="1"/>
+                                        <field name="category_id" readonly="1"/>
+                                        <field name="amount" required="1"/>
+                                        <field name="uom_id" options="{'no_create':True}" readonly="1"/>
+                                        <field name="unit_price" readonly="1"/>
+                                        <field name="total_cost" readonly="1" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+
                     </sheet>
                 </form>
             </field>
