@@ -45,8 +45,28 @@
         </record>
 
 
+        <record id="client_see_only_own_products" model="ir.rule">
+            <field name="name">Client See Only His Own Products</field>
+            <field ref="product.model_product_template" name="model_id"/>
+            <field name="domain_force">[('contractor_id', '=', user.id )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_vendor'))]"/>
+        </record>
+        <record id="client_see_only_own_variants" model="ir.rule">
+            <field name="name">Client See Only His Own Products</field>
+            <field ref="product.model_product_product" name="model_id"/>
+            <field name="domain_force">[('contractor_id', '=', user.id )]</field>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="groups" eval="[(4, ref('archilist_estimates_quotation.real_state_vendor'))]"/>
+        </record>
         <record id="client_see_only_own_quotation" model="ir.rule">
-            <field name="name">Client See Only His Own RFQ</field>
+            <field name="name">Vendor See Only His Own RFQ</field>
             <field ref="model_real_state_quotation" name="model_id"/>
             <field name="domain_force">[('partner_id', '=', user.partner_id.id )]</field>
             <field name="perm_write" eval="1"/>

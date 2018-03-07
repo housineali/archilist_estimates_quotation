@@ -7,10 +7,10 @@
             <field name="arch" type="xml">
                 <form>
                     <div>
-                        <label for="partner_ids"/>
+                        <label for="partner_ids" string="Contractors"/>
                         <field name="partner_ids" required="True" widget="many2many_tags" domain="[('supplier','=',True)]"/>
                         <footer>
-                            <button string="Create Quotations" name="create_quotations" type="object" class="btn-primary"/>
+                            <button string="Forward To Contractors" name="create_quotations" type="object" class="btn-primary"/>
                             <button string="Cancel" class="btn-default" special="cancel"/>
                         </footer>
                     </div>
@@ -19,7 +19,7 @@
         </record>
 
         <record id="real_state_quotation_wizard_view_action" model="ir.actions.act_window">
-            <field name="name">Quotations</field>
+            <field name="name">Select Vendor</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">real.state.quotation.wizard</field>
             <field name="view_mode">tree,form</field>

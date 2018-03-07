@@ -85,7 +85,6 @@
                                 <field name="visit" readonly="True"/>
                                 <field name="design_drawing" readonly="True"/>
                                 <field name="drawing_file" readonly="True"/>
-                                <field name="property_image" readonly="True" widget='image' class="oe_avatar"/>
                             </group>
 
                         </group>
@@ -102,15 +101,24 @@
                         </group>
 
                         <notebook>
-                            <page string="Interiors">
-                                <field name="interior_categ_ids"
-                                       domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
-                                       options="{'no_create':True}"
-                                       attrs="{'readonly':[('state','!=','draft')]}">
-                                    <tree>
-                                        <field name="name" string="Interior Category Name"/>
+                            <page string="Images">
+                                <field name="image_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="image" required="1" widget='image' class="oe_avatar"/>
                                     </tree>
                                 </field>
+                            </page>
+
+                            <page string="Interiors">
+                                <!--<field name="interior_categ_ids"-->
+                                <!--domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"-->
+                                <!--options="{'no_create':True}"-->
+                                <!--attrs="{'readonly':[('state','!=','draft')]}">-->
+                                <!--<tree>-->
+                                <!--<field name="name" string="Interior Category Name"/>-->
+                                <!--</tree>-->
+                                <!--</field>-->
                             </page>
 
                             <page string="Exteriors">
@@ -140,13 +148,14 @@
 
                                 <field name="product_ids">
                                     <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
+                                        <field name="product_id"
                                                domain="[('interior','=',True)]" required="1"/>
-                                        <field name="category_id" readonly="1"/>
+                                        <field name="category_id" readonly="0"/>
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                         <field name="unit_price" readonly="1"/>
                                         <field name="total_cost" readonly="1" sum="Total"/>
+                                        <field name="notes"/>
                                     </tree>
                                 </field>
                             </page>
@@ -203,7 +212,6 @@
                                 <field name="visit"/>
                                 <field name="design_drawing"/>
                                 <field name="drawing_file"/>
-                                <field name="property_image" widget='image' class="oe_avatar"/>
                             </group>
 
                         </group>
@@ -221,7 +229,14 @@
                         </group>
 
                         <notebook>
-
+                            <page string="Images">
+                                <field name="image_ids" readonly="1">
+                                    <tree editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="image" required="1" widget='image' class="oe_avatar"/>
+                                    </tree>
+                                </field>
+                            </page>
                             <page string="Interiors">
                                 <field name="interior_categ_ids"
                                        domain="[('finishing_type_id','=',finishing_type_id),('finishing_type_id','!=',False),('type','=','interior')]"
@@ -259,14 +274,15 @@
                             <page string="Products">
                                 <field name="product_ids">
                                     <tree editable="bottom">
-                                        <field name="product_id" options="{'no_create':True}"
+                                        <field name="product_id"
                                                domain="['|','|',('categ_id', 'in', parent.interior_categ_ids),('categ_id', 'in', parent.exterior_categ_ids),('categ_id', 'in', parent.outdoor_categ_ids)]"
                                                required="1"/>
-                                        <field name="category_id" readonly="1"/>
+                                        <field name="category_id" readonly="0"/>
                                         <field name="amount" required="1"/>
                                         <field name="uom_id" options="{'no_create':True}" readonly="1"/>
                                         <field name="unit_price" readonly="1"/>
                                         <field name="total_cost" readonly="1" sum="Total"/>
+                                        <field name="notes"/>
                                     </tree>
                                 </field>
                             </page>

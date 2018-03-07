@@ -24,12 +24,19 @@ access_product_line_vendor,product.line Vendor,model_product_line,archilist_esti
 access_product_line_user,product.line User,model_product_line,archilist_estimates_quotation.real_state_user,1,1,1,1
 
 
+access_ir_module_category,ir.module.category Portal,base.model_ir_module_category,base.group_portal,1,0,0,0
+access_product_price_history,product.price.history Portal,product.model_product_price_history,base.group_portal,1,0,0,0
+
 access_product_template_client,product.template Client,product.model_product_template,archilist_estimates_quotation.real_state_client,1,0,0,0
 access_product_template_vendor,product.template Vendor,product.model_product_template,archilist_estimates_quotation.real_state_vendor,1,1,1,0
 access_product_template_user,product.template User,product.model_product_template,archilist_estimates_quotation.real_state_user,1,1,1,1
 
-access_product_category_client,product.category Client,product.model_product_category,archilist_estimates_quotation.real_state_client,1,0,0,0
-access_product_category_vendor,product.category Vendor,product.model_product_category,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_request_image_line_client,request.image.line Client,model_request_image_line,archilist_estimates_quotation.real_state_client,1,1,1,0
+access_request_image_line_vendor,request.image.line Vendor,model_request_image_line,archilist_estimates_quotation.real_state_vendor,1,1,1,0
+access_request_image_line_user,request.image.line User,model_request_image_line,archilist_estimates_quotation.real_state_user,1,1,1,1
+
+access_product_category_client,product.category Client,product.model_product_category,archilist_estimates_quotation.real_state_client,1,1,1,0
+access_product_category_vendor,product.category Vendor,product.model_product_category,archilist_estimates_quotation.real_state_vendor,1,0,0,0
 access_product_category_user,product.category User,product.model_product_category,archilist_estimates_quotation.real_state_user,1,1,1,1
 
 access_product_uom_client,product.uom Client,product.model_product_uom,archilist_estimates_quotation.real_state_client,1,0,0,0

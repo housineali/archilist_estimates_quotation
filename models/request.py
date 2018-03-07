@@ -53,7 +53,7 @@ class Request(models.Model):
     user_id = fields.Many2one('res.users', string='Requester', index=True, track_visibility='onchange',
                               default=lambda self: self.env.uid)
     state = fields.Selection(string="State",
-                             selection=[('draft', 'Draft'), ('to_review', 'Reviewing'),
+                             selection=[('draft', 'Draft'), ('to_review', 'Estimate'),
                                         ('estimation_review', 'Estimation Review'),
                                         ('waiting_final_offer', 'Waiting Final Offer'), ('quotation', 'Quotation'),
                                         ('rejected', 'Rejected'), ('estimation_refused', 'Estimation Refused'), ],
@@ -87,14 +87,13 @@ class Request(models.Model):
                                                  ('3d_design', '3D Design'),
                                                  ('3d_design_2d_drawing', '3D Design & 2D Drawing'),
                                                  ('detailed_3d', 'Detailed 3D'), ], required=False, )
-    property_image = fields.Binary(string="Property Image", )
     drawing_file = fields.Binary(string="Drawing File", )
 
     interior_categ_ids = fields.Many2many(comodel_name="product.category", relation="interior_categ_rel", string="", )
     exterior_categ_ids = fields.Many2many(comodel_name="product.category", relation="exterior_categ_rel", string="", )
     outdoor_categ_ids = fields.Many2many(comodel_name="product.category", relation="outdoor_categ_rel", string="", )
     product_ids = fields.One2many(comodel_name="product.line", inverse_name='request_id', string="Products", )
-
+    image_ids = fields.One2many(comodel_name="request.image.line", inverse_name='request_id', string="Images", )
 
     @api.model
     def create(self, vals):
@@ -217,6 +216,15 @@ class AcceptedQuotations(models.Model):
     vendor_notes = fields.Text(string="Vendor Notes", required=False, )
 
 
+class ImageLines(models.Model):
+    _name = 'request.image.line'
+
+    name = fields.Char(string="Description", required=False, )
+    image = fields.Binary(string="Image", )
+    request_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
+
+
+
 class ProductInteriorLines(models.Model):
     _name = 'product.line'
 
@@ -226,10 +234,11 @@ class ProductInteriorLines(models.Model):
         self.total_cost = self.unit_price * self.amount
 
     product_id = fields.Many2one(comodel_name="product.product", string="Product", required=False, )
-    category_id = fields.Many2one(comodel_name="product.category", string="Category", required=False, )
+    category_id = fields.Many2one(comodel_name="product.category", string="Category", )
     request_id = fields.Many2one(comodel_name="real.state.request", string="", required=False, )
-    quotation_id = fields.Many2one(comodel_name="real.state.quotation", string="", required=False, )
-    uom_id = fields.Many2one(comodel_name="product.uom", string="Unit of measure", required=False, )
+    quotation_id = fields.Many2one(comodel_name="real.state.quotation",  )
+    uom_id = fields.Many2one(comodel_name="product.uom", string="Unit of measure", related='product_id.uom_id' )
     amount = fields.Float(string="Amount", required=False, )
-    unit_price = fields.Float(string="Unit Price", required=False, )
+    unit_price = fields.Float(string="Unit Price", related='product_id.list_price' )
     total_cost = fields.Float(string="Total Cost", compute=_compute_total_cost)
+    notes = fields.Text(string="Notes", required=False, )

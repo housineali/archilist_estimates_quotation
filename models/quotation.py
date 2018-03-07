@@ -57,7 +57,6 @@ class RequestQuotation(models.Model):
                                                  ('3d_design', '3D Design'),
                                                  ('3d_design_2d_drawing', '3D Design & 2D Drawing'),
                                                  ('detailed_3d', 'Detailed 3D'), ], related='request_id.design_drawing')
-    property_image = fields.Binary(string="Property Image", related='request_id.property_image')
     drawing_file = fields.Binary(string="Drawing File", related='request_id.drawing_file')
 
     interior_categ_ids = fields.Many2many(comodel_name="product.category",
@@ -67,6 +66,7 @@ class RequestQuotation(models.Model):
     outdoor_categ_ids = fields.Many2many(comodel_name="product.category",
                                          related='request_id.outdoor_categ_ids', )
     product_ids = fields.One2many(comodel_name="product.line", inverse_name='quotation_id', string="Products", )
+    image_ids = fields.One2many(comodel_name="request.image.line", inverse_name='request_id',related='request_id.image_ids', string="Images", )
 
     @api.model
     def create(self, vals):

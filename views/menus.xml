@@ -134,7 +134,7 @@
                   action="real_state_request_action_user" groups="archilist_estimates_quotation.real_state_user" sequence="2"/>
         <!--Client Menu Items-->
         <menuitem id="real_state_quotation_menu_action" name="Quotations" parent="real_state_menu_categ"
-                  action="real_state_quotation_action_vendor" groups="archilist_estimates_quotation.real_state_vendor"
+                  action="real_state_quotation_action_vendor" groups="archilist_estimates_quotation.real_state_vendor,archilist_estimates_quotation.real_state_user"
                   sequence="3"/>
 
         <!--Settings Menu Items-->
